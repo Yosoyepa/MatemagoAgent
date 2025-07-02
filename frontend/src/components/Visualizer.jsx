@@ -53,7 +53,71 @@ const Visualizer = ({ type, code }) => {
                         
                     case 'mermaid':
                         try {
-                            const { svg } = await mermaid.render('mermaid-graph-' + Date.now(), code);
+                            // Limpiar y preparar el código de Mermaid
+                            let cleanCode = code;
+                            
+                            // Problemas específicos que hemos detectado:
+                            // 1. Limpiar caracteres de control y saltos de línea problemáticos
+                            cleanCode = cleanCode.replace(/\r\n/g, '\n')
+                                                .replace(/\r/g, '\n')
+                                                .replace(/\n\s*\n/g, '\n')
+                                                .trim();
+                            
+                            // 2. Manejar solo paréntesis anidados problemáticos
+                            // Buscar específicamente patrones como "(1+2)+3" dentro de etiquetas de nodos
+                            cleanCode = cleanCode.replace(/([A-Z][0-9]*)\(([^)]*\([^)]*\)[^)]*)\)/g, (match, nodeId, content) => {
+                                // Solo procesar si hay paréntesis anidados
+                                let cleanContent = content
+                                    .replace(/\(([^)]+)\)/g, '[$1]')  // Cambiar paréntesis internos por corchetes
+                                    .replace(/\\"/g, '"')            // Limpiar escapes de comillas
+                                    .replace(/\\n/g, ' ')             // Convertir \n en espacios
+                                    .replace(/\\r/g, '')             // Remover \r
+                                    .replace(/\\t/g, ' ')             // Convertir tabs en espacios
+                                    .replace(/\s+/g, ' ')             // Normalizar espacios múltiples
+                                    .trim();
+                                
+                                return `${nodeId}(${cleanContent})`;
+                            });
+                            
+                            // 3. Limpiar caracteres problemáticos en todas las etiquetas de nodos
+                            cleanCode = cleanCode.replace(/([A-Z][0-9]*)([\(\[])([^\)\]]*)[\)\]]/g, (match, nodeId, openBracket, content) => {
+                                let closeBracket = openBracket === '(' ? ')' : ']';
+                                
+                                // Limpiar caracteres problemáticos de manera más agresiva
+                                let cleanContent = content
+                                    .replace(/"/g, "'")              // Reemplazar comillas dobles por simples
+                                    .replace(/\\"/g, "'")           // Limpiar escapes de comillas
+                                    .replace(/\\n/g, ' ')             // Convertir \n en espacios
+                                    .replace(/\\r/g, '')             // Remover \r
+                                    .replace(/\\t/g, ' ')             // Convertir tabs en espacios
+                                    .replace(/\s+/g, ' ')             // Normalizar espacios múltiples
+                                    // Manejar paréntesis desbalanceados y problemáticos
+                                    .replace(/\([^)]*$/g, '')         // Remover paréntesis sin cerrar al final
+                                    .replace(/^[^(]*\)/g, '')         // Remover paréntesis de cierre sin apertura al inicio
+                                    .replace(/\([^)]*\(/g, '(')       // Simplificar paréntesis anidados
+                                    .replace(/\).*\)/g, ')')          // Simplificar múltiples cierres
+                                    // Limpiar comillas simples desbalanceadas
+                                    .replace(/^'[^']*$/g, (match) => match.replace(/'/g, ''))  // Remover comilla sin cerrar
+                                    .replace(/^[^']*'$/g, (match) => match.replace(/'/g, ''))  // Remover comilla de cierre sin apertura
+                                    .trim();
+                                
+                                return `${nodeId}${openBracket}${cleanContent}${closeBracket}`;
+                            });
+                            
+                            // 3. Lo mismo para corchetes []
+                            cleanCode = cleanCode.replace(/([A-Z][0-9]*)(\[[^\]]*\])/g, (match, nodeId, label) => {
+                                let cleanLabel = label
+                                    .replace(/\\"/g, '"')
+                                    .replace(/\\n/g, ' ')
+                                    .replace(/\\r/g, '')
+                                    .replace(/\\t/g, ' ')
+                                    .replace(/\s+/g, ' ')
+                                    .trim();
+                                return nodeId + cleanLabel;
+                            });
+                            
+                            
+                            const { svg } = await mermaid.render('mermaid-graph-' + Date.now(), cleanCode);
                             visualRef.current.innerHTML = svg;
                             
                             // Aplicar estilos MateMago al SVG de Mermaid
@@ -62,9 +126,12 @@ const Visualizer = ({ type, code }) => {
                                 mermaidSvg.style.borderRadius = '0.75rem';
                                 mermaidSvg.style.background = '#ffffff';
                                 mermaidSvg.style.padding = '1rem';
+                                mermaidSvg.style.maxWidth = '100%';
+                                mermaidSvg.style.height = 'auto';
                             }
                         } catch (e) {
                             console.error('Mermaid render error:', e);
+                            console.error('Problematic code:', code);
                             visualRef.current.innerHTML = `
                                 <div class="flex items-center justify-center p-8 bg-red-50 rounded-xl border-2 border-red-200">
                                     <div class="text-center">
@@ -73,6 +140,10 @@ const Visualizer = ({ type, code }) => {
                                         </div>
                                         <p class="text-red-700 font-semibold">Error al dibujar el diagrama</p>
                                         <p class="text-red-600 text-sm mt-1">El formato del diagrama no es válido</p>
+                                        <details class="mt-2 text-xs text-left">
+                                            <summary class="cursor-pointer text-red-500">Ver detalles</summary>
+                                            <pre class="mt-1 p-2 bg-red-100 rounded text-red-800 overflow-auto max-h-32">${e.message}</pre>
+                                        </details>
                                     </div>
                                 </div>
                             `;

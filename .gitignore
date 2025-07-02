@@ -1,0 +1,44 @@
+# MateMago specific
+*.log
+.DS_Store
+
+# Development and testing files
+*test*.html
+*debug*
+*dev*.html
+console.log
+*.tmp
+*.temp
+
+# Production configs with sensitive data
+.env
+.env.local
+.env.production
+.env.staging
+
+# Dependencies
+node_modules/
+__pycache__/
+venv/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Build outputs
+dist/
+build/
+*.pyc
+*.pyo
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

@@ -1,4 +1,19 @@
-# 🎩 MateMago - Tutor de Matemáticas con IA
+# 🧙‍♂️ MateMago - Tutor de Matemáticas con IA
+
+<div align="center">
+
+[![🏗️ Arquitectura](https://img.shields.io/badge/🏗️-Arquitectura-blue?style=for-the-badge)](./docs/ARCHITECTURE.md)
+[![📚 API Docs](https://img.shields.io/badge/📚-API_Docs-green?style=for-the-badge)](./docs/API.md)
+[![🚀 Deployment](https://img.shields.io/badge/🚀-Deployment-orange?style=for-the-badge)](./docs/DEPLOYMENT.md)
+[![💻 Frontend](https://img.shields.io/badge/💻-Frontend-purple?style=for-the-badge)](./frontend/README.md)
+[![⚙️ Backend](https://img.shields.io/badge/⚙️-Backend-red?style=for-the-badge)](./backend/)
+
+[![GitHub Stars](https://img.shields.io/github/stars/yourusername/MatemagoAgent?style=social)](https://github.com/yourusername/MatemagoAgent/stargazers)
+[![GitHub Forks](https://img.shields.io/github/forks/yourusername/MatemagoAgent?style=social)](https://github.com/yourusername/MatemagoAgent/network/members)
+[![GitHub Issues](https://img.shields.io/github/issues/yourusername/MatemagoAgent)](https://github.com/yourusername/MatemagoAgent/issues)
+[![GitHub License](https://img.shields.io/github/license/yourusername/MatemagoAgent)](https://github.com/yourusername/MatemagoAgent/blob/main/LICENSE)
+
+</div>
 
 MateMago es una aplicación web que utiliza inteligencia artificial para explicar conceptos matemáticos de manera divertida y visual para niños de 5 a 10 años. La aplicación combina explicaciones personalizadas con visualizaciones interactivas creadas dinámicamente.
 

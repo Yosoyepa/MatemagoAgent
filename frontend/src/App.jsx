@@ -53,7 +53,6 @@ function App() {
                         <div className="w-16 h-1 bg-gradient-to-r from-transparent via-matemago-accent to-transparent rounded-full"></div>
                     </div>
                 </header>
-                
                 <main className="space-y-8">
                     <InputForm onQuery={handleQuery} isLoading={isLoading} />
                     
