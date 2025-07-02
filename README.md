@@ -232,7 +232,7 @@ Distribuido bajo la Licencia MIT. Ver `LICENSE` para más información.
 
 ## 👥 Autores
 
-- **Tu Nombre** - *Trabajo inicial* - [TuGitHub](https://github.com/tuusuario)
+- **Juan Carlos Andrade Unigarro** - *Universidad Nacional de Colombia* - [Juandradeu](https://github.com/yosoyepa)
 
 ## 🙏 Agradecimientos
 
