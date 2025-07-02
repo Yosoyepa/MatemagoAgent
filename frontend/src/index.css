@@ -1,0 +1,213 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    font-family: ui-rounded, "Hiragino Maru Gothic ProN", Quicksand, Comfortaa, Manjari, "Arial Rounded MT",
+      "Arial Rounded MT Bold", Calibri, source-sans-pro, sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #f4f6f8;
+    color: #3d3d3d;
+    min-height: 100vh;
+  }
+}
+
+@layer components {
+  /* MateMago Core Components - Identidad Visual Oficial */
+  .matemago-card {
+    @apply bg-white rounded-3xl shadow-matemago border-0 p-6 hover:shadow-matemago-lg transition-all duration-300 hover:-translate-y-1;
+  }
+
+  .matemago-button {
+    @apply font-semibold px-6 py-3 rounded-xl shadow-matemago hover:shadow-matemago-lg transition-all duration-300 hover:-translate-y-1 inline-flex items-center justify-center gap-2;
+  }
+
+  .matemago-button-primary {
+    @apply matemago-button bg-matemago-primary hover:bg-purple-600 text-white;
+  }
+
+  .matemago-button-accent {
+    @apply matemago-button bg-matemago-accent hover:bg-orange-600 text-white;
+  }
+
+  .matemago-button-success {
+    @apply matemago-button bg-matemago-success hover:bg-green-600 text-white;
+  }
+
+  .matemago-button-outline {
+    @apply matemago-button border-2 border-matemago-primary text-matemago-primary hover:bg-matemago-primary hover:text-white bg-transparent;
+  }
+
+  .matemago-input {
+    @apply w-full px-4 py-3 bg-gray-50 border-2 border-transparent rounded-xl focus:border-matemago-primary focus:bg-white focus:ring-4 focus:ring-purple-100 transition-all duration-300 text-matemago-text placeholder:text-gray-400;
+  }
+
+  .matemago-label {
+    @apply block text-base font-semibold text-matemago-text mb-2;
+  }
+
+  .matemago-title {
+    @apply text-4xl font-extrabold tracking-tight text-matemago-text;
+  }
+
+  .matemago-subtitle {
+    @apply text-xl font-bold text-matemago-text;
+  }
+
+  .matemago-text {
+    @apply text-matemago-text leading-relaxed;
+  }
+
+  .matemago-brand {
+    @apply text-matemago-primary;
+  }
+
+  /* Status Components */
+  .matemago-success-card {
+    @apply matemago-card border-l-4 border-matemago-success bg-green-50;
+  }
+
+  .matemago-error-card {
+    @apply matemago-card border-l-4 border-matemago-error bg-red-50;
+  }
+
+  .matemago-loading {
+    @apply matemago-button bg-matemago-primary opacity-75 cursor-not-allowed;
+  }
+
+  /* Icon Containers */
+  .matemago-icon-container {
+    @apply w-10 h-10 rounded-full flex items-center justify-center;
+  }
+
+  .matemago-icon-primary {
+    @apply matemago-icon-container bg-matemago-primary bg-opacity-10 text-matemago-primary;
+  }
+
+  .matemago-icon-accent {
+    @apply matemago-icon-container bg-matemago-accent bg-opacity-10 text-matemago-accent;
+  }
+
+  .matemago-icon-success {
+    @apply matemago-icon-container bg-matemago-success bg-opacity-10 text-matemago-success;
+  }
+
+  .matemago-icon-error {
+    @apply matemago-icon-container bg-matemago-error bg-opacity-10 text-matemago-error;
+  }
+}
+
+/* Animaciones MateMago */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.2);
+  }
+}
+
+@keyframes magic-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(112, 111, 211, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(112, 111, 211, 0);
+  }
+}
+
+.float-animation {
+  animation: float 3s ease-in-out infinite;
+}
+
+.sparkle-animation {
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+.magic-pulse {
+  animation: magic-pulse 2s infinite;
+}
+
+/* Visual Content Styling */
+.visual-content {
+  @apply mt-6 text-center overflow-x-auto p-4 bg-gray-50 rounded-2xl;
+}
+
+.visual-content svg, 
+.visual-content canvas {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.75rem;
+}
+
+/* Custom scroll bar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #706fd3;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #5f5db8;
+}
+
+/* Focus states */
+.matemago-focus:focus {
+  outline: none;
+  ring: 4px;
+  ring-color: rgba(112, 111, 211, 0.3);
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .matemago-card {
+    @apply p-4;
+  }
+  
+  .matemago-title {
+    @apply text-3xl;
+  }
+  
+  .matemago-button {
+    @apply px-4 py-2 text-sm;
+  }
+}
+
+/* Loading states */
+.loading-shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
