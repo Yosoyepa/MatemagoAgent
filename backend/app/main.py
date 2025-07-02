@@ -7,7 +7,7 @@ app = FastAPI(title="MateMago API")
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"], # Allow Vite's default dev server
+allow_origins=["http://localhost:5173", "http://localhost:5174"], # Allow local dev servers
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
