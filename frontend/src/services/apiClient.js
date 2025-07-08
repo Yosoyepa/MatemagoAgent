@@ -1,5 +1,5 @@
 // Handles all communication with the backend API.
-const API_BASE_URL = 'http://127.0.0.1:8000/api/v1/tutor';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/api/v1/tutor';
 
 export const fetchExplanation = async (concept, age) => {
     const response = await fetch(`${API_BASE_URL}/explain`, {
